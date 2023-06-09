@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class BookingDetailController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:bookingDetail-list|bookingDetail-create|bookingDetail-edit|bookingDetail-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:bookingDetail-create', ['only' => ['create','store']]);
+         $this->middleware('permission:bookingDetail-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:bookingDetail-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class BookingDetailController extends Controller
      */
     public function index()
     {
-        //
+        return view('bookingDetail.index');
     }
 
     /**
@@ -24,7 +31,7 @@ class BookingDetailController extends Controller
      */
     public function create()
     {
-        //
+        return view('bookingDetail.create');
     }
 
     /**
@@ -35,7 +42,16 @@ class BookingDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'booking_id' => 'required',
+            'jenis_pemmbayaran' => 'required',
+            'total_bayar' => 'required',                                 
+        ]);
+    
+        BookingDetail::create($request->all());
+    
+        return redirect()->route('bookingDetail.index')
+                        ->with('success','Schedule created successfully.');
     }
 
     /**
@@ -46,7 +62,7 @@ class BookingDetailController extends Controller
      */
     public function show(BookingDetail $bookingDetail)
     {
-        //
+        return view('bookingDetail.show',compact('bookingDetail'));
     }
 
     /**
@@ -57,7 +73,7 @@ class BookingDetailController extends Controller
      */
     public function edit(BookingDetail $bookingDetail)
     {
-        //
+        return view('bookingDetail.edit',compact('bookingDetail'));
     }
 
     /**
@@ -69,7 +85,16 @@ class BookingDetailController extends Controller
      */
     public function update(Request $request, BookingDetail $bookingDetail)
     {
-        //
+        request()->validate([
+            'booking_id' => 'required',
+            'jenis_pemmbayaran' => 'required',
+            'total_bayar' => 'required',  
+        ]);
+    
+        $bookingDetail->update($request->all());
+    
+        return redirect()->route('bookingDetail.index')
+                        ->with('success','Member detail updated successfully');
     }
 
     /**

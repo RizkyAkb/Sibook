@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 </head>
 <body>
     <div id="app">
@@ -33,14 +34,13 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                        @else
+                        
+                        @role('Owner')                            
                             <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                            <li><a class="nav-link" href="{{ route('users.index') }}">Manajemen Users</a></li>
-                            <li><a class="nav-link" href="{{ route('roles.index') }}">Manajemen Role</a></li>
-                            <li><a class="nav-link" href="{{ route('lapangan.index') }}">Manajemen Lapangan</a></li>
+                            <li><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                            <li><a class="nav-link" href="{{ url('booking') }}">Pemesanan</a></li>
+                            <li><a class="nav-link" href="{{ route('lapangan.index') }}">Lapangan</a></li>
+                            <li><a class="nav-link" href="{{ route('roles.index') }}">Role</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -60,7 +60,12 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @else
+                            <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                        @endrole
+                        
                     </ul>
                 </div>
             </div>

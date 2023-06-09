@@ -16,7 +16,7 @@ class CreateBookingDetailsTable extends Migration
         Schema::create('booking_details', function (Blueprint $table) {
             $table->id();
             $table->integer('booking_id');
-            $table->string('jenis_pemmbayaran');
+            $table->string('jenis_pembayaran');
             $table->bigInteger('total_bayar');
             $table->timestamps();
         });

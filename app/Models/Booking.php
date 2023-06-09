@@ -10,4 +10,12 @@ class Booking extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // protected $table = 'booking_details';
+
+    public function bookingDetail()
+    {
+        return $this->hasOne(BookingDetail::class);
+    }
+    
 }

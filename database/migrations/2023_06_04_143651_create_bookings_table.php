@@ -20,7 +20,7 @@ class CreateBookingsTable extends Migration
             $table->integer('sesi_selesai');
             $table->integer('id_pemesan');
             $table->string('nama_pemesan');
-            $table->integer('nohp');
+            $table->string('nohp');
             $table->string('status');
             $table->integer('id_lapangan');
             $table->timestamps();

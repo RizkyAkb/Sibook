@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:booking-list|booking-create|booking-edit|booking-delete', ['only' => ['index','show']]);
+        //  $this->middleware('permission:booking-create', ['only' => ['create','store']]);
+         $this->middleware('permission:booking-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:booking-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::latest()->paginate(5);
+        return view('bookingDetail.index',compact('bookings'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -24,7 +33,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        return view('bookingDetail.create');
     }
 
     /**
@@ -35,7 +44,21 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'tanggal_main' => 'required',
+            'sesi_mulai' => 'required',
+            'sesi_selesai' => 'required',  
+            'nohp' => 'required',  
+            'nama_pemesan' => 'required',  
+            'id_pemesan' => 'required',  
+            'id_lapangan' => 'required',  
+            'status' => 'required',                               
+        ]);
+    
+        Booking::create($request->all());
+    
+        return redirect()->route('booking.index')
+                        ->with('success','Booking successfull, please finish the payment');
     }
 
     /**
@@ -46,7 +69,11 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        // return view('bookingDetail.show',compact('booking'));
+        
+        return view('bookingDetail.show', [
+            'booking' => $booking
+        ]);
     }
 
     /**
@@ -57,7 +84,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('bookingDetail.edit',compact('booking'));
     }
 
     /**
@@ -69,7 +96,21 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        request()->validate([
+            'tanggal_main' => 'required',
+            'sesi_mulai' => 'required',
+            'sesi_selesai' => 'required',  
+            'nohp' => 'required',  
+            'nama_pemesan' => 'required',  
+            'id_pemesan' => 'required',  
+            'id_lapangan' => 'required',  
+            'status' => 'required',  
+        ]);
+    
+        $booking->update($request->all());
+    
+        return redirect()->route('booking.index')
+                        ->with('success','Booking updated successfully');
     }
 
     /**

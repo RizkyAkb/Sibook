@@ -9,10 +9,10 @@ class BookingDetail extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id, booking_id'];
+    protected $guarded = ['id', 'booking_id'];
 
-    public function booking()
-    {
-        return $this->belongsTo(Booking::class);
-    }
+    // public function booking()
+    // {
+    //     return $this->belongsTo(Booking::class);
+    // }
 }

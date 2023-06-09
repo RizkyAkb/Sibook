@@ -27,6 +27,14 @@ class PermissionTableSeeder extends Seeder
            'lapangan-create',
            'lapangan-edit',
            'lapangan-delete',
+           'booking-list',
+           'booking-create',
+           'booking-edit',
+           'booking-delete',
+           'bookingDetail-list',
+        //    'bookingDetail-create',
+           'bookingDetail-edit',
+           'bookingDetail-delete',
         ];
    
         foreach ($permissions as $permission) {

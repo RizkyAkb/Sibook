@@ -14,7 +14,7 @@ class MemberDetailController extends Controller
      */
     public function index()
     {
-        //
+        return view('memberDetail.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class MemberDetailController extends Controller
      */
     public function create()
     {
-        //
+        return view('memberDetail.create');
     }
 
     /**
@@ -35,7 +35,20 @@ class MemberDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'user_id' => 'required',
+            'masa_berlaku' => 'required',
+            'saldo' => 'required',
+            'hari_main' => 'required',
+            'sesi_mulai' => 'required',
+            'sesi_selesai' => 'required',
+            'status' => 'required',                        
+        ]);
+    
+        MemberDetail::create($request->all());
+    
+        return redirect()->route('memberDetail.index')
+                        ->with('success','Schedule created successfully.');
     }
 
     /**
@@ -46,7 +59,7 @@ class MemberDetailController extends Controller
      */
     public function show(MemberDetail $memberDetail)
     {
-        //
+        return view('memberDetail.show',compact('memberDetail'));
     }
 
     /**
@@ -57,7 +70,7 @@ class MemberDetailController extends Controller
      */
     public function edit(MemberDetail $memberDetail)
     {
-        //
+        return view('memberDetail.edit',compact('memberDetail'));
     }
 
     /**
@@ -69,7 +82,20 @@ class MemberDetailController extends Controller
      */
     public function update(Request $request, MemberDetail $memberDetail)
     {
-        //
+        request()->validate([
+            'user_id' => 'required',
+            'masa_berlaku' => 'required',
+            'saldo' => 'required',
+            'hari_main' => 'required',
+            'sesi_mulai' => 'required',
+            'sesi_selesai' => 'required',
+            'status' => 'required',  
+        ]);
+    
+        $memberDetail->update($request->all());
+    
+        return redirect()->route('memberDetail.index')
+                        ->with('success','Member detail updated successfully');
     }
 
     /**

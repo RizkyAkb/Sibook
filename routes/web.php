@@ -7,6 +7,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LapanganController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingDetailController;
+use App\Http\Controllers\MemberDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +26,21 @@ use App\Http\Controllers\LapanganController;
 //     return view('welcome');
 // });
 
-Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('booking/create', [BookingController::class, 'create']);
+Route::post('booking/create', [BookingController::class, 'store']);
+
+Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('lapangan', LapanganController::class);
+    Route::get('booking', [BookingController::class, 'index']);
+    Route::get('booking/{booking:id}', [BookingController::class, 'show']);
+    // Route::resource('booking', BookingController::class);
+    
+
 });
