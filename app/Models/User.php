@@ -24,9 +24,7 @@ class User extends Authenticatable
     //     'password',
     // ];
 
-    protected $guarded = [
-        'id',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,4 +44,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function memberDetail()
+    {
+        return $this->hasOne(MemberDetail::class);
+    }
 }

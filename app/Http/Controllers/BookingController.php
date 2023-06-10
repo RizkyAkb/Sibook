@@ -57,8 +57,7 @@ class BookingController extends Controller
     
         Booking::create($request->all());
     
-        return redirect()->route('booking.index')
-                        ->with('success','Booking successfull, please finish the payment');
+        return view('payment.create')->with('success','Booking successfull, please finish the payment');
     }
 
     /**

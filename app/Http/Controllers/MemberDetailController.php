@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MemberDetail;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class MemberDetailController extends Controller
 {
@@ -59,6 +60,7 @@ class MemberDetailController extends Controller
      */
     public function show(MemberDetail $memberDetail)
     {
+        // $memberDetail = auth()->id();
         return view('memberDetail.show',compact('memberDetail'));
     }
 

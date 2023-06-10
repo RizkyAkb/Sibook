@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('lapangan', LapanganController::class);
     Route::get('booking', [BookingController::class, 'index']);
     Route::get('booking/{booking:id}', [BookingController::class, 'show']);
+    Route::get('member/{user:username}', [UserController::class, 'show_detail']);
     // Route::resource('booking', BookingController::class);
     
 

@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+// use Spatie\Permission\Models\Role;
+// use Spatie\Permission\Models\Permission;
+
 class RegisterController extends Controller
 {
     /*
@@ -51,7 +54,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'nohp' => ['required', 'min:9'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -64,10 +68,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'username' => $data['username'],
+            'nohp' => $data['nohp'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // $user = User::create($input);
+        $user->assignRole('Member');
+        return $user;
     }
 }
