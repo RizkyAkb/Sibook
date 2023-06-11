@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('booking', [BookingController::class, 'index']);
     Route::get('booking/{booking:id}', [BookingController::class, 'show']);
     Route::get('member/detail', [UserController::class, 'show_detail']);
+    Route::get('member/topup', [MemberDetailController::class, 'topup']);
+    Route::put('member/topup', [MemberDetailController::class, 'update_topup']);
     Route::resource('memberDetail', MemberDetailController::class);
     // Route::resource('booking', BookingController::class);
     

@@ -34,14 +34,16 @@
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
                     <strong>Nama Pemesan:</strong>
-                    <input type="text" name="nama_pemesan" class="form-control" placeholder="Futsal FC" value="{{ old('nama_pemesan') }}">                    
+                    <input type="text" name="nama_pemesan" class="form-control" placeholder="Futsal FC"
+                        value="{{ old('nama_pemesan') }}">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
                     <strong>Tanggal Main:</strong>
-                    <input type="date" name="tanggal_main" class="form-control" placeholder="" min="{{ date('Y-m-d') }}" value="{{ old('tanggal_main') }}">
+                    <input type="date" name="tanggal_main" class="form-control" placeholder="" min="{{ date('Y-m-d') }}"
+                        value="{{ old('tanggal_main') }}">
                 </div>
             </div>
 
@@ -50,6 +52,7 @@
                     <strong>Sesi Mulai:</strong>
                     <select type="text" class="form-select" id="sesi_mulai" name="sesi_mulai"
                         aria-label="Default select example" required>
+                        <option value="" selected>Pilih Sesi</option>
                         {{-- BookingController, Ambil pilihan/option dari table sesi_lists --}}
                         @foreach ($sesi as $ss)
                             @if (old('sesi_mulai') == $ss->id)
@@ -67,6 +70,7 @@
                     <strong>Sesi Selesai:</strong>
                     <select type="text" class="form-select" id="sesi_selesai" name="sesi_selesai"
                         aria-label="Default select example" required>
+                        <option value="">Pilih Sesi</option>
                         {{-- BookingController, Ambil pilihan/option dari table sesi_lists --}}
                         @foreach ($sesi as $ss)
                             @if (old('sesi_mulai') == $ss->id)
@@ -106,17 +110,62 @@
             <input id="id_pemesan" type="hidden" name="id_pemesan" value="{{ random_int(100000, 999999) }}">
             <input id="status" type="hidden" name="status" value="Belum Bayar">
 
-            <div class="my-3"><strong>Sub Total: </strong>Rp.
-                @foreach ($optLapangan as $ol)
-                    {{ $ol->harga }}
-                @endforeach
+            <div class="my-3" id="hargatotal">
+                {{-- <strong>Sub Total: </strong> --}}
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 my-2 text-center">
                 <button type="submit" class="btn btn-primary">PESAN</button>
             </div>
         </div>
-
-
     </form>
 
+    {{ $sesiMulaiBooked }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var option1 = document.getElementById('sesi_mulai');
+            var option2 = document.getElementById('sesi_selesai');
+            var totalPriceEl = document.getElementById('hargatotal');
+            var basePrice = 50000;
+
+            option2.disabled = true;
+
+            option1.addEventListener('change', function() {
+                if (option1.value === '') {
+                    option2.disabled = true;
+                    option2.value = ''; // Reset nilai opsi kedua jika opsi pertama dipilih ulang
+                } else {
+                    option2.disabled = false;
+                    // Memeriksa apakah nilai opsi pertama lebih besar dari nilai opsi kedua
+                    if (parseInt(option1.value) > parseInt(option2.value)) {
+                        option2.value = ''; // Reset nilai opsi kedua jika tidak memenuhi syarat
+                    }
+                }
+            });
+
+            option2.addEventListener('change', function() {
+                // Memeriksa apakah nilai opsi kedua lebih kecil dari nilai opsi pertama
+                if (parseInt(option2.value) < parseInt(option1.value)) {
+                    option2.value = ''; // Reset nilai opsi kedua jika tidak memenuhi syarat
+                }
+            });
+
+            function calculateTotalPrice() {
+                var option1Sesi = parseInt(option1.value) || 0;
+                var option2Sesi = parseInt(option2.value) || 0;
+
+                var totalPrice = basePrice * (option2Sesi - option1Sesi);
+
+                if (totalPrice < 0) {
+                    totalPriceEl.textContent = 'Total Harga: Pilihan Tidak Valid';
+                } else {
+                    totalPriceEl.textContent = 'Total Harga: ' + totalPrice;
+                }
+
+            }
+
+            option1.addEventListener('change', calculateTotalPrice);
+            option2.addEventListener('change', calculateTotalPrice);
+        });
+    </script>
 @endsection

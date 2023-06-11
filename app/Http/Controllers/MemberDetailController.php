@@ -40,9 +40,9 @@ class MemberDetailController extends Controller
             'user_id' => 'required',
             'masa_berlaku',
             'saldo',
-            'hari_main',
-            'sesi_mulai',
-            'sesi_selesai',
+            // 'hari_main',
+            // 'sesi_mulai',
+            // 'sesi_selesai',
             'status',
         ]);
     
@@ -111,17 +111,20 @@ class MemberDetailController extends Controller
         //
     }
 
-    public function topup(Request $request, MemberDetail $memberDetail)
+    // Redirect to top up form
+    public function topup(MemberDetail $memberDetail)
     {
-        request()->validate([
-            'user_id' => 'required',
-            'saldo' => 'required',
-        ]);
-        
-        
-        $memberDetail->update($request->all());
-    
-        return redirect()->route('memberDetail.index')
+        return view('memberDetail.topup');
+    }
+
+    // Isi saldo member berdasarkan id login
+    public function update_topup(Request $request, MemberDetail $memberDetail)
+    {
+        MemberDetail::where('user_id',auth()->user()->id)->update(['saldo' => $request['saldo']]);
+        // $memberDetail->update(['saldo' => $request->saldo]);
+
+        // dd($memberDetail);
+        return view('memberDetail.show')
                         ->with('success','Top up success.');
     }
 }
