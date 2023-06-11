@@ -5,10 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edit Product</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
+                <h2>Edit User Detail</h2>
             </div>
         </div>
     </div>
@@ -26,7 +23,7 @@
     @endif
 
 
-    <form action="{{ route('products.update',$product->id) }}" method="POST">
+    <form action="{{ route('lapangan.update',$lapangan->id) }}" method="POST">
     	@csrf
         @method('PUT')
 
@@ -34,16 +31,25 @@
          <div class="row">
 		    <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
-		            <strong>Name:</strong>
-		            <input type="text" name="name" value="{{ $product->name }}" class="form-control" placeholder="Name">
+		            <strong>Nama Lapangan:</strong>
+		            <input type="text" name="nama_lapangan" value="{{ auth()->user()->name }}" class="form-control" placeholder="nama_lapangan">
 		        </div>
 		    </div>
-		    <div class="col-xs-12 col-sm-12 col-md-12">
+            
+            <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
-		            <strong>Detail:</strong>
-		            <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail">{{ $product->detail }}</textarea>
+		            <strong>Harga:</strong>
+		            <input type="number" name="harga" value="{{ $lapangan->harga }}" class="form-control" placeholder="harga">
 		        </div>
 		    </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+		        <div class="form-group">
+		            <strong>Status:</strong>
+		            <input type="text" name="status" value="{{ $lapangan->status }}" class="form-control" placeholder="status">
+		        </div>
+		    </div>
+
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		      <button type="submit" class="btn btn-primary">Submit</button>
 		    </div>

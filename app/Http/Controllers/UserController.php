@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
     
 class UserController extends Controller
 {
@@ -133,9 +134,15 @@ class UserController extends Controller
                         ->with('success','User deleted successfully');
     }
 
-    public function show_detail(User $usr){
-        return view('memberDetail.show', [
-            'user' => $usr
-        ]);
+    // Menampilkan detail yan dimiliki user dengan role member    
+    public function show_detail(){
+
+        $memberDetails = \DB::table('users')
+        ->leftJoin('member_details','users.id','=','member_details.user_id')
+        ->select('*')
+        ->where('users.id','=',Auth::id())
+        ->get();
+
+        return view('memberDetail.show', compact('memberDetails'));
     }
 }

@@ -80,7 +80,7 @@
 
                         @role('Member')
                             <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                            <li><a class="nav-link" href="{{ url('member',Auth::user()->username) }}">Member Detail</a></li>
+                            <li><a class="nav-link" href="{{ url('member/detail') }}">Member Detail</a></li>
                             {{-- <li><a class="nav-link" href="{{ url('/') }}">Detail Member</a></li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -91,7 +91,7 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <div class="dropdown-item">
-                                        Saldo Rp. 999.999
+                                        Saldo Rp. {{ auth()->user()->memberDetail->saldo }}                                        
                                     </div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

@@ -1,40 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('DJAGOS FUTSAL') }}</div>
-
+                <div class="card border-0">
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+
+                        <div class="row my-4">
+                            <div class="col-md-5">
+                                <h3>DJAGOS FUTSAL</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum quo placeat reiciendis
+                                    adipisci vel ut. Quo ab, ut suscipit inventore aspernatur illum, tenetur voluptatem,
+                                    earum natus eligendi molestias officiis non!</p>
+                                @guest
+                                    <a class="btn btn-primary my-2" href="{{ url('booking/create') }}">BOOKING LAPANGAN</a>
+                                @endguest
+                                @role('Member')
+                                    <a class="btn btn-primary my-2" href="{{ url('member/topup') }}">TOP UP DEPOSIT</a>
+                                @endrole
                             </div>
-                        @endif
-
-                        @guest
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-primary" href="{{ url('booking/create') }}">BOOKING LAPANGAN</a>
-                            </div>                                                    
-                        @endguest
-
-                        @role('Member')
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-primary" href="{{ url('member/topup') }}">TOP UP DEPOSIT</a>
-                        </div>                                                    
-                        @endrole
-                        <center>
-                            <div id='calendar' class="my-4"></div>
-                        </center>
+                            <div id='calendar' class="col-md-7"></div>
+                        </div>
                     </div>
 
                     <!-- Carousel wrapper -->
                     <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center"
-                        data-mdb-ride="carousel">                       
+                        data-mdb-ride="carousel">
                         <div class="carousel-inner py-4">
-                            <h2 class="my-2">Galeri Kami</h2>
+                            <h2 class="mt-5">Galeri Kami</h2>
                             <p>Lorem ipsum dolor sit amet. <br>
                                 Orci varius natoque penatibus et magnis dis parturient montes, nascetur. </p>
                             <!-- Single item -->
@@ -70,7 +69,7 @@
                     <!-- Carousel wrapper -->
 
                     <div class="d-flex justify-content-md-between ">
-                        <div class="col-md-6 p-3">
+                        <div class="col-md-5 m-5">
                             <div class="d-flex justify-content-md-start">
                                 <h2>Lokasi</h2>
                             </div>
@@ -82,7 +81,7 @@
                                         map</a></iframe>
                             </div>
                         </div>
-                        <div class="col-md-6 p-3">
+                        <div class="col-md-5 m-5">
                             <div class="d-flex justify-content-md-start">
                                 <h2>Tentang Kami</h2>
                             </div>
@@ -96,6 +95,7 @@
                         </div>
                     </div>
 
+                    {{ $jadwals }}
                 </div>
             </div>
         </div>
@@ -124,63 +124,16 @@
                     minute: '2-digit',
                     hour12: false
                 },
-                events: [{
-                        title: "My repeating event",
-                        start: '10:00', // a start time (10am in this example)
-                        end: '14:00', // an end time (2pm in this example)
-                        dow: [1, 4], // Repeat monday and thursday
-                        ranges: [{
-                            start: "2023-06-08",
-                            end: "2023-06-08"
-                        }, ]
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-09T07:00:00',
-                        end: '2023-06-08T07:30:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    },
-                    {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-08T08:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-08T09:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-08T10:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-09T12:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-08T13:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-08T14:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-10T15:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    }, {
-                        title: 'FUTSAL FC',
-                        start: '2023-06-10T11:00:00',
-                        backgroundColor: 'green',
-                        borderColor: 'green'
-                    },
+                events: [
+                    @foreach ($jadwals as $jadwal)
+                        {
+                            title: '{{ $jadwal->nama_pemesan }}',                            
+                            start: '{{ $jadwal->tanggal_main }}T{{ $jadwal->nama_sesi }}',
+                            // end: '2023-06-08T07:30',
+                            backgroundColor: 'red',
+                            borderColor: 'red'
+                        },
+                    @endforeach
                 ],
 
             }); calendar.render();

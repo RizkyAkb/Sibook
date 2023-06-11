@@ -6,59 +6,57 @@
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2> Member Detail</h2>
-            </div>            
+            </div>
         </div>
     </div>
-    
-    
-    <div class="row">        
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Nama:</strong>
-                {{ '__TES' }}
+
+    <form action="{{ route('users.update', auth()->id()) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Nama:</strong>
+                    <input type="text" name="name" value="{{ auth()->user()->name }}" class="form-control" placeholder="user12345">                    
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Saldo:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Saldo:</strong>
+                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->saldo }}" class="form-control" placeholder="999000" disabled>                    
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Hari Main:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Hari Main:</strong>
+                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->hari_main }}" class="form-control" placeholder="Senin/Selasa/Dll" disabled>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Sesi Main:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Sesi Mulai:</strong>
+                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->sesi_mulai }}" class="form-control" placeholder="08:00" disabled>                    
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Sesi Keluar:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Sesi Selesai:</strong>
+                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->sesi_selesai }}" class="form-control" placeholder="09:00" disabled>                
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Sesi Main:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
+                    <strong>Username:</strong>
+                    <input type="text" name="saldo" value=" {{ auth()->user()->username }}" class="form-control" placeholder="member123" disabled>                    
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Username:</strong>
-                {{-- {{ }} --}}
+            <div class="col-xs-12 col-sm-12 col-md-6 my-2">
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Password:</strong>
-                {{-- {{ }} --}}
-            </div>
-        </div>
+        
+    </form>
+    <div class="col-xs-12 col-sm-12 col-md-6 my-2">
+        <button type="submit" class="btn btn-primary">Isi Saldo</button>
+    </div>
     </div>
 @endsection

@@ -33,7 +33,12 @@ class BookingController extends Controller
      */
     public function create()
     {
-        return view('bookingDetail.create');
+        $sesiMulaiBooked = Booking::orderBy('sesi_mulai')->get();
+        $sesi = \DB::table('sesi_lists')->select('id','nama_sesi')->get();
+
+        $optLapangan = \DB::table('lapangans')->select('id','nama_lapangan','harga')->where('status','=','Ready')->get();
+
+        return view('bookingDetail.create', compact('sesi','optLapangan'));
     }
 
     /**

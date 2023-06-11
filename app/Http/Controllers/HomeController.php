@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $jadwals = \DB::table('bookings')
+        ->leftJoin('sesi_lists','bookings.sesi_mulai','=','sesi_lists.id')
+        ->select('tanggal_main','sesi_mulai','sesi_selesai','nama_pemesan','nama_sesi')        
+        ->get();
+        
+        $saldo = \DB::table('member_details')
+        ->select('saldo')
+        ->where('user_id','=',Auth::id())
+        ->get();
+
+        return view('home',compact('jadwals', 'saldo'));
     }
 }

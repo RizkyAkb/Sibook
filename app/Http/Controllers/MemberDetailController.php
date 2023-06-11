@@ -15,7 +15,7 @@ class MemberDetailController extends Controller
      */
     public function index()
     {
-        return view('memberDetail.index');
+        return view('home');
     }
 
     /**
@@ -38,12 +38,12 @@ class MemberDetailController extends Controller
     {
         request()->validate([
             'user_id' => 'required',
-            'masa_berlaku' => 'required',
-            'saldo' => 'required',
-            'hari_main' => 'required',
-            'sesi_mulai' => 'required',
-            'sesi_selesai' => 'required',
-            'status' => 'required',                        
+            'masa_berlaku',
+            'saldo',
+            'hari_main',
+            'sesi_mulai',
+            'sesi_selesai',
+            'status',
         ]);
     
         MemberDetail::create($request->all());
@@ -109,5 +109,19 @@ class MemberDetailController extends Controller
     public function destroy(MemberDetail $memberDetail)
     {
         //
+    }
+
+    public function topup(Request $request, MemberDetail $memberDetail)
+    {
+        request()->validate([
+            'user_id' => 'required',
+            'saldo' => 'required',
+        ]);
+        
+        
+        $memberDetail->update($request->all());
+    
+        return redirect()->route('memberDetail.index')
+                        ->with('success','Top up success.');
     }
 }
