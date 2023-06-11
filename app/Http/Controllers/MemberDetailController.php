@@ -120,7 +120,7 @@ class MemberDetailController extends Controller
     // Isi saldo member berdasarkan id login
     public function update_topup(Request $request, MemberDetail $memberDetail)
     {
-        MemberDetail::where('user_id',auth()->user()->id)->update(['saldo' => $request['saldo']]);
+        MemberDetail::where('user_id',auth()->user()->id)->update(['saldo' => auth()->user()->memberDetail->saldo += $request['saldo']]);
         // $memberDetail->update(['saldo' => $request->saldo]);
 
         // dd($memberDetail);
