@@ -9,7 +9,7 @@ class BookingDetail extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id', 'booking_id'];
+    protected $guarded = ['id'];
 
     // public function booking()
     // {

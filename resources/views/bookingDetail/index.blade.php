@@ -26,10 +26,10 @@
             {{-- ----- --}}
             <th>Tanggal Main</th>
             <th>Sesi Mulai</th>
-            <th>Sesi Selesai</th>
+            <th>Sesi Selesai</th>            
             {{-- Ambil dari tabel bookingdetails --}}
-            <th>Jenis Pembayaran</th>             
-            <th>Total Bayar</th>            
+            {{-- <th>Jenis Pembayaran</th>             
+            <th>Total Bayar</th>             --}}
             {{-- ---- --}}
             <th>Status</th>
             <th width="280px">Action</th>
@@ -40,9 +40,9 @@
 	        <td>{{ $booking->nama_pemesan }}</td>
 	        <td>{{ $booking->tanggal_main }}</td>
             <td>{{ $booking->sesi_mulai }}</td>
-            <td>{{ $booking->sesi_selesai }}</td>
-            <td>{{ $booking->bookingDetail->jenis_pembayaran }}</td>
-            <td>{{ $booking->bookingDetail->total_bayar }}</td>
+            <td>{{ $booking->sesi_selesai }}</td>            
+            {{-- <td>{{ $booking->bookingDetail->jenis_pembayaran }}</td>
+            <td>{{ $booking->bookingDetail->total_bayar }}</td> --}}
             <td>{{ $booking->status }}</td>
 	        <td>                
                 <a class="btn btn-info" href="booking/{{$booking->id}}">Show</a>                

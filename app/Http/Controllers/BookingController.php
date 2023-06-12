@@ -51,6 +51,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        $jml_bayar = $request['jml_bayar'];
         request()->validate([
             'tanggal_main' => 'required',
             'sesi_mulai' => 'required',
@@ -61,10 +62,14 @@ class BookingController extends Controller
             'id_lapangan' => 'required',  
             'status' => 'required',                               
         ]);
-    
-        Booking::create($request->all());
-    
-        return view('payment.create')->with('success','Booking successfull, please finish the payment');
+        
+        if ((Booking::where('sesi_mulai', '=', $request['sesi_mulai'])->exists()) && (Booking::where('sesi_selesai', '=', $request['sesi_selesai'])->exists()) && (Booking::where('tanggal_main', '=', $request['tanggal_main'])->exists())) {            
+            return redirect()->back()->with('success', 'Sesi has been used by other user');
+        } else{
+            Booking::create($request->all());            
+            $book_id = Booking::orderBy('id', 'desc')->first();
+            return view('payment.create')->with('success','Booking successfull, please finish the payment')->with('booking_id', $book_id['id'])->with('jml_bayar', $jml_bayar);
+        }                    
     }
 
     /**
@@ -111,8 +116,8 @@ class BookingController extends Controller
             'id_pemesan' => 'required',  
             'id_lapangan' => 'required',  
             'status' => 'required',  
-        ]);
-    
+        ]);            
+
         $booking->update($request->all());
     
         return redirect()->route('booking.index')

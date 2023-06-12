@@ -60,7 +60,7 @@ class MemberDetailController extends Controller
      */
     public function show(MemberDetail $memberDetail)
     {
-        // $memberDetail = auth()->id();
+        // $memberDetail = auth()->id();        
         return view('memberDetail.show',compact('memberDetail'));
     }
 
@@ -124,7 +124,6 @@ class MemberDetailController extends Controller
         // $memberDetail->update(['saldo' => $request->saldo]);
 
         // dd($memberDetail);
-        return view('memberDetail.show')
-                        ->with('success','Top up success.');
+        return view('memberDetail.show')->with('success','Top up success.');
     }
 }

@@ -81,12 +81,12 @@ class RegisterController extends Controller
         $userId = $user->id;
         $masa_berlaku = $user->created_at;
         MemberDetail::create([
-            'user_id'=> $userId, 
-            'saldo'=>0,
+            'user_id'=> $userId,
+            'saldo'=> 0,
             'masa_berlaku'=> $masa_berlaku->addDays(30)->format('Y-m-d'),
-            'hari_main'=>'Senin',
-            'sesi_mulai'=>'1',
-            'sesi_selesai'=>'2',
+            'hari_main'=>$data['hari_main'],
+            'sesi_mulai'=>$data['sesi_mulai'],
+            'sesi_selesai'=>$data['sesi_selesai'],
             'status'=> 'aktif',
         ]);
         return $user;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookingDetail;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class BookingDetailController extends Controller
@@ -106,5 +107,27 @@ class BookingDetailController extends Controller
     public function destroy(BookingDetail $bookingDetail)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bayar_guest(Request $request) 
+    {
+        request()->validate([            
+            'jenis_pembayaran' => 'required',
+            'total_bayar' => 'required',     
+            'booking_id' => 'required',                            
+        ]);
+    
+        BookingDetail::create($request->all());
+    
+        Booking::where('id',$request['booking_id'])->update(['status' => 'Booked/Sudah Bayar']);
+
+
+        return redirect('/')->with('success','Schedule created successfully.');
     }
 }

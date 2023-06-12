@@ -31,6 +31,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('booking/create', [BookingController::class, 'create']);
 Route::post('booking/create', [BookingController::class, 'store']);
 
+Route::post('payment/create', [BookingDetailController::class, 'bayar_guest']);
+// Route::resource('bookingDetail', BookingDetailController::class);
+
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {

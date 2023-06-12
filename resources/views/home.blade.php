@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    {{ $jadwals }}
+                    {{-- {{ $jadwals }} --}}
                 </div>
             </div>
         </div>

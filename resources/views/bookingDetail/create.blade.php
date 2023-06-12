@@ -25,10 +25,16 @@
         </div>
     @endif
 
+    @if (\Session::has('success'))
+        <div class="alert alert-danger">
+            <ul>
+                <li>{!! \Session::get('success') !!}</li>
+            </ul>
+        </div>
+    @endif
 
     <form action="{{ url('booking/create') }}" method="POST">
         @csrf
-
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
@@ -86,7 +92,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
                     <strong>No HP:</strong>
-                    <input type="number" name="nohp" class="form-control" placeholder="08xxxxxxxxxx">
+                    <input type="number" name="nohp" class="form-control" placeholder="08xxxxxxxxxx" min='0'>
                 </div>
             </div>
 
@@ -109,6 +115,7 @@
 
             <input id="id_pemesan" type="hidden" name="id_pemesan" value="{{ random_int(100000, 999999) }}">
             <input id="status" type="hidden" name="status" value="Belum Bayar">
+            <input id="jml_bayar" type="hidden" name="jml_bayar">
 
             <div class="my-3" id="hargatotal">
                 {{-- <strong>Sub Total: </strong> --}}
@@ -119,13 +126,14 @@
         </div>
     </form>
 
-    {{ $sesiMulaiBooked }}
+    {{-- {{ $sesiMulaiBooked }} --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var option1 = document.getElementById('sesi_mulai');
             var option2 = document.getElementById('sesi_selesai');
             var totalPriceEl = document.getElementById('hargatotal');
+            var jml_bayar = document.getElementById('jml_bayar');
             var basePrice = 50000;
 
             option2.disabled = true;
@@ -158,8 +166,9 @@
 
                 if (totalPrice < 0) {
                     totalPriceEl.textContent = 'Total Harga: Pilihan Tidak Valid';
-                } else {
+                } else {                    
                     totalPriceEl.textContent = 'Total Harga: ' + totalPrice;
+                    jml_bayar.value = totalPrice;
                 }
 
             }

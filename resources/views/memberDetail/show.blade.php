@@ -22,6 +22,12 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
+                    <strong>Username:</strong>
+                    <input type="text" name="saldo" value=" {{ auth()->user()->username }}" class="form-control" placeholder="member123" disabled>                    
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 my-1">
+                <div class="form-group">
                     <strong>Saldo:</strong>
                     <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->saldo }}" class="form-control" placeholder="999000" disabled>                    
                 </div>
@@ -35,21 +41,22 @@
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
                     <strong>Sesi Mulai:</strong>
-                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->sesi_mulai }}" class="form-control" placeholder="08:00" disabled>                    
+                    <input type="text" name="saldo" value="{{ $sesi_mulai['0']->nama_sesi }}" class="form-control" placeholder="08:00" disabled>                    
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
                     <strong>Sesi Selesai:</strong>
-                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->sesi_selesai }}" class="form-control" placeholder="09:00" disabled>                
+                    <input type="text" name="saldo" value="{{ $sesi_selesai['0']->nama_sesi }}" class="form-control" placeholder="09:00" disabled>                
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 my-1">
                 <div class="form-group">
-                    <strong>Username:</strong>
-                    <input type="text" name="saldo" value=" {{ auth()->user()->username }}" class="form-control" placeholder="member123" disabled>                    
+                    <strong>Masa Berlaku:</strong>
+                    <input type="text" name="saldo" value="{{ auth()->user()->memberDetail->masa_berlaku }}" class="form-control" placeholder="09:00" disabled>                
                 </div>
             </div>
+            
             <div class="col-xs-12 col-sm-12 col-md-6 my-2">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
